@@ -1,0 +1,14 @@
+# backend
+backend/node_modules
+backend/.env
+
+# frontend
+frontend/node_modules
+frontend/.env
+
+# admin
+admin/node_modules
+admin/.env
+
+# common
+.DS_Store

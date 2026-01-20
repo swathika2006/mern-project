@@ -1,0 +1,16 @@
+{
+    "github.copilot.chat.copilotDebugCommand.enabled": false,
+    "github.copilot.chat.reviewAgent.enabled": false,
+    "github.copilot.nextEditSuggestions.allowWhitespaceOnlyChanges": false,
+    "github.copilot.nextEditSuggestions.enabled": false,
+    "github.copilot.nextEditSuggestions.fixes": false,
+    "github.copilot.renameSuggestions.triggerAutomatically": false,
+    "editor.formatOnSave": true,
+    "prettier.jsxSingleQuote": false,
+    "editor.dropIntoEditor.preferences": [
+
+    ],
+    // "emmet.includeLanguages": {
+    //     "javascript":"javascriptreact"
+    // }
+}
