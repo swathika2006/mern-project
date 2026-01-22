@@ -1,6 +1,6 @@
 // placing orders using cod method
 import orderModel from "../Models/OrderModel.js";
-import usermodel from "../Models/userModel.js";
+import usermodel from "../Models/UserModel.js";
 
 const placeOrder = async (req, res) => {
   try {
@@ -53,14 +53,39 @@ const placeOrderRazorPay = async(req , res)=>{
 
 // all the orders data for the admin panel
 const allOrders = async (req,res)=>{
-    
+    try{
+      const orders=await orderModel.find({})
+      res.json({success:true,orders})
+
+    }
+    catch(err){
+      console.log(err.message)
+      res.json({success:false,message:err.message})
+    }
 }
 
 
-// all the orders data for the admin panel
-const userOrders = async (req,res)=>{
 
-}
+const userOrders = async (req, res) => {
+  try {
+    const userId = req.userId; // ✅ from middleware
+
+    const orders = await orderModel.find({ userId });
+
+    res.json({
+      success: true,
+      orders,
+    });
+
+  } catch (err) {
+    console.log(err.message);
+    res.json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 
 // update order status from Admin panel
 const updateStatus = async (req,res)=>{
@@ -69,4 +94,3 @@ const updateStatus = async (req,res)=>{
 
 
 export {placeOrder,placeOrderStripe,placeOrderRazorPay,allOrders,userOrders,updateStatus}
-

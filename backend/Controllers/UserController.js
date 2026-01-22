@@ -1,6 +1,6 @@
 // for login and registering of the user
 
-import userModel from "../Models/userModel.js";
+import userModel from "../Models/UserModel.js";
 import validator from "validator"
 import jwt from "jsonwebtoken";
 
