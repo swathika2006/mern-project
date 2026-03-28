@@ -40,10 +40,9 @@ const PlaceOrder = () => {
       receipt: order.receipt,
       handler: async (response) => {
         try {
-          // Fixed the headers object here
           const { data } = await axios.post(backendUrl + '/api/order/verifyRazorpay', response, { headers: { token } });
           if (data.success) {
-            navigate('/orders'); // Fixed the semicolon here
+            navigate('/orders'); 
             setCartItems({});
           }
         } catch (err) {
