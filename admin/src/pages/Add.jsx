@@ -38,15 +38,27 @@ const Add = ({token}) => {
         formData,
         {headers:{token}}
       );
+      // if(response.data.success){
+      //   toast.success(response.data.message)
+      //   setName('')
+      //   setDescription('')
+      //   setimage1(false)
+      //   setimage2(false)
+      //   setimage3(false)
+      //   setimage4(false)
+      // }
       if(response.data.success){
         toast.success(response.data.message)
         setName('')
         setDescription('')
+        setPrice('')    // Add this
+        setSizes([])    // Add this
+        setBestseller(false) // Add this
         setimage1(false)
         setimage2(false)
         setimage3(false)
         setimage4(false)
-      }
+        }
         else{
           toast.error(response.data.message)
         }
@@ -306,15 +318,14 @@ const Add = ({token}) => {
         <input
           type="checkbox"
           id="bestseller"
-          name="bestSeller"
-          checked={bestSeller}
-          onChange={() => setBestSeller((prev) => !prev)}
+          // name="bestSeller" <- This is fine as a string, but the variables below must match your state
+          checked={bestseller} // Changed from bestSeller to bestseller
+          onChange={() => setBestseller((prev) => !prev)} // Changed from setBestSeller to setBestseller
         />
-
         <label className="cursor-pointer" htmlFor="bestseller">
           Add to BestSeller
         </label>
-      </div>
+  </div>
 
       <button type="submit" className="w-28 py-3 mt-4 bg-black text-white">
         Add
