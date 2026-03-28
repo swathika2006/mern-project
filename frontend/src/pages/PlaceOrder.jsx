@@ -29,37 +29,32 @@ const PlaceOrder = () => {
     setFormData(data=>({...data,[name]:value}))
   }
 
-  const initPay=(order)=>{
-    const options={
-      key:import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amount:order.amount,
-      currency:order.currency,
-      name:'Order Payment',
-      description:'Order payment',
-      order_id:order.id,
-      receipt:order.receipt,
-      handler:async(response)=>{
-        console.log("Handler reached!")
-        console.log(response)
-        try{
-          const {data}=await axios.post(backendUrl+'/api/order/verifyRazorpay',response,{headers:{token}});
-          if(data.success){
-            navigate('/orders')
-            setCartItems({})
+  const initPay = (order) => {
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Order Payment',
+      description: 'Order payment',
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (response) => {
+        try {
+          // Fixed the headers object here
+          const { data } = await axios.post(backendUrl + '/api/order/verifyRazorpay', response, { headers: { token } });
+          if (data.success) {
+            navigate('/orders'); // Fixed the semicolon here
+            setCartItems({});
           }
-
-        }
-        catch(err){
-          console.log(err)
-          toast.error(err); 
+        } catch (err) {
+          console.log(err);
+          toast.error(err.message);
         }
       }
-
-    }
-    const rzp=new window.Razorpay(options);
-    rzp.open()
-  }
-
+    };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
   const onSubmitHandler=async(e)=>{
     e.preventDefault()
     try{
