@@ -19,7 +19,7 @@ import cors from "cors";
 import "dotenv/config";
 import connectDb from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
-import userRouter from "./Routes/Userroute.js";
+import userRouter from "./Routes/UserRoute.js";
 import productRouter from "./Routes/ProductRoute.js";
 import cartRouter from "./Routes/CartRoute.js";
 import orderRouter from "./Routes/OrderRoute.js";
