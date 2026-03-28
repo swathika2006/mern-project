@@ -55,7 +55,7 @@ const Add = ({token}) => {
       console.log("Message:", e.message);
       console.log("Status:", e.response?.status);
       console.log("Data:", e.response?.data);
-      toast.error(error.message)
+      toast.error(e.message)
     }
   };
 
