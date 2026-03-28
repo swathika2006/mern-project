@@ -115,7 +115,7 @@ const PlaceOrder = () => {
               // window.location.replace(session_url)
             }
             else{
-              toast.error(responseStripe.data.message)
+              toast.error(responseRazorpay.data.message)
             }
 
               break;
