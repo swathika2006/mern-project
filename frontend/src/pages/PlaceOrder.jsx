@@ -29,6 +29,37 @@ const PlaceOrder = () => {
     setFormData(data=>({...data,[name]:value}))
   }
 
+  const initPay=(order)=>{
+    const options={
+      key:import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount:order.amount,
+      currency:order.currency,
+      name:'Order Payment',
+      description:'Order payment',
+      order_id:order.id,
+      receipt:order.receipt,
+      handler:async(response)=>{
+        console.log("Handler reached!")
+        console.log(response)
+        try{
+          const {data}=await axios.post(backendUrl+'/api/order/verifyRazorpay',response,{headers:{token}});
+          if(data.success){
+            navigate('/orders')
+            setCartItems({})
+          }
+
+        }
+        catch(err){
+          console.log(err)
+          toast.error(err); 
+        }
+      }
+
+    }
+    const rzp=new window.Razorpay(options);
+    rzp.open()
+  }
+
   const onSubmitHandler=async(e)=>{
     e.preventDefault()
     try{
@@ -62,7 +93,37 @@ const PlaceOrder = () => {
           else{
             toast.error(response.data.message)
           }
-          break
+          break;
+
+          case 'stripe':
+            const responseStripe=await axios.post(backendUrl+'/api/order/stripe',orderData,{headers:{token}})
+            if(responseStripe.data.success){
+              const {session_url}=responseStripe.data
+              window.location.replace(session_url)
+            }
+            else{
+              toast.error(responseStripe.data.message)
+            }
+
+            break;
+
+            case 'razorpay':
+            const responseRazorpay=await axios.post(backendUrl+'/api/order/razorpay',orderData,{headers:{token}})
+            if(responseRazorpay.data.success){
+              initPay(responseRazorpay.data.order)
+              // const {session_url}=responseRazorpay.data
+              // window.location.replace(session_url)
+            }
+            else{
+              toast.error(responseStripe.data.message)
+            }
+
+              break;
+
+            
+            default:
+              break;
+
       }
     }
 
@@ -74,6 +135,7 @@ const PlaceOrder = () => {
     }
 
   }
+  
   
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
@@ -116,12 +178,13 @@ const PlaceOrder = () => {
         <div className='mt-12'>
           <Title text1={'PAYMENT'} text2={'METHOD'} />
 
-          <div onClick={()=>{setMethod('stripe')}} className={`flex flex-col lg:flex-row gap-3 mt-4 `}>
+          <div className={`flex flex-col lg:flex-row gap-3 mt-4 `}>
             {/* Stripe */}
-            <div className='flex items-center gap-3 border p-2 px-3 rounded cursor-pointer  '>
+            <div onClick={()=>{setMethod('stripe')}}  className='flex items-center gap-3 border p-2 px-3 rounded cursor-pointer  '>
               <p className={`w-4 h-4 border rounded-full  ${method === 'stripe' ? 'bg-green-400' : ''}`}></p>
               <img src={assets.stripe_logo} className='h-5' alt="Stripe" />
             </div>
+          
 
             {/* Razorpay */}
             <div onClick={()=>{setMethod('razorpay')}} className={`flex items-center gap-3 border p-2 px-3 rounded cursor-pointer`}>
