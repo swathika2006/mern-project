@@ -43,4 +43,4 @@ const Verify = () => {
 export default Verify
 
 // DESCRIPTION::
-// Actually this is basic method and not the best way to create a secured payment verification method , most fot eh companies use webhooks to use a standardised way
+// Actually this is basic method and not the best way to create a secured payment verification method 

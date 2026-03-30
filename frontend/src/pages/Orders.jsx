@@ -22,7 +22,7 @@ const Orders = () => {
       );
 
       if (response.data.success) {
-        setOrderData(response.data.orders); // ✅ MISSING LINE
+        setOrderData(response.data.orders); 
       }
     } catch (err) {
       console.log(err);

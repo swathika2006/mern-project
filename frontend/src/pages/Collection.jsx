@@ -14,7 +14,6 @@ const Collection = () => {
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
 
-  // ✅ Toggle main category
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
       setCategory((prev) => prev.filter((item) => item !== e.target.value));
@@ -23,7 +22,6 @@ const Collection = () => {
     }
   };
 
-  // ✅ Toggle sub-category
   const toggleSubCategory = (e) => {
     if (subCategory.includes(e.target.value)) {
       setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
@@ -32,7 +30,6 @@ const Collection = () => {
     }
   };
 
-  // ✅ Apply filters
   const applyFilter = () => {
     let productsCopy = products.slice();
 
@@ -63,7 +60,6 @@ const Collection = () => {
     setFilterProducts(productsCopy);
   };
 
-  // ✅ Sort filtered products
   const sortProducts = () => {
     let fpCopy = filterProducts.slice();
 
@@ -80,12 +76,10 @@ const Collection = () => {
     }
   };
 
-  // ✅ Reapply filters when inputs or product data changes
   useEffect(() => {
     applyFilter();
   }, [category, subCategory, search, products]);
 
-  // ✅ Re-sort when sort type changes
   useEffect(() => {
     sortProducts();
   }, [sortType]);

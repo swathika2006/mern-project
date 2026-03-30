@@ -21,7 +21,7 @@ const placeOrder = async (req, res) => {
     const { items, amount, address } = req.body;
 
     const orderData = {
-      userId: req.userId,      // ✅ FIX 1: from middleware
+      userId: req.userId,      
       items,
       address,
       amount,
@@ -33,7 +33,6 @@ const placeOrder = async (req, res) => {
     const newOrder = new orderModel(orderData);
     await newOrder.save();
 
-    // ✅ FIX 2: use req.userId
     await usermodel.findByIdAndUpdate(req.userId, {
       cartData: {},
     });
@@ -45,7 +44,6 @@ const placeOrder = async (req, res) => {
   } catch (err) {
     console.log(err.message);
 
-    // ✅ FIX 3: correct error response
     res.json({
       success: false,
       message: err.message,
@@ -60,7 +58,7 @@ const placeOrderStripe = async(req , res)=>{
     const {userId,items,amount,address}=req.body;
     const {origin}=req.headers;
     const orderData = {
-      userId: req.userId,      // ✅ FIX 1: from middleware
+      userId: req.userId,   
       items,
       address,
       amount,
@@ -208,7 +206,7 @@ const allOrders = async (req,res)=>{
 
 const userOrders = async (req, res) => {
   try {
-    const userId = req.userId; // ✅ from middleware
+    const userId = req.userId; 
 
     const orders = await orderModel.find({ userId });
 
